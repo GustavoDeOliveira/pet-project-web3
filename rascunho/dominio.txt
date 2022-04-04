@@ -1,0 +1,16 @@
+Personagem
+
+string nome
+enum classe - não alteravel
+int dano - afetado por encontros e itens. Ao alcancar [vida] o personagem fica desacordado, e não pode >interagir em encontros até >utilizar um {item} para diminuir o [dano]
+int vida - aumenta a cada nível de acordo com a [classe]
+long xp - aumenta ao concluir {encontros} e {aventuras}
+int nivel - aumenta ao acumular [xp]
+int ataque - capacidade de causar [dano] ao >atacar durante um {encontro}. Aumenta a cada [nível] de acordo com a [classe]
+int defesa - capacidade de reduzir o [dano] recebido ao >atacar durante um {encontro}. Aumenta a cada [nível] de acordo com a [classe]
+{itens} inventario - cada personagem possui uma coleção de {itens}, que é chamada inventário.
+
+enum classe - Guerreiro|Ladino|Mago
+Personagens de [classes] diferentes precisam de quantidades diferentes de [xp] para subir de [nível],
+    com uma fórmula parecida com (nivel*10)+(nivel*0.1)² para determinar o [xp] necessário para passar ao próximo [nível].
+    Ao subir de [nível], o personagem também aumenta [vida], [ataque] e [defesa], em valores estabelecidos pela [classe].

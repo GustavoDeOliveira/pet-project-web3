@@ -16,9 +16,6 @@ POST /personagem Cria uma nova personagem
 PUT /personagem/{personagemId} Altera informações de uma personagem
 	Corpo: application/json {"nome":"string"}
 
-PATCH /personagem/{personagemId} Adiciona experiência a uma personagem
-	Corpo: application/json {"experiencia":"int"}
-
 DELETE /personagem/{personagemId} Remove uma personagem
 
 ------------------------
