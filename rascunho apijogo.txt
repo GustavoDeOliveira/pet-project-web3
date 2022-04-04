@@ -1,0 +1,77 @@
+===============
+ÁREA DO JOGADOR
+-----
+GERAL
+GET / Retorna uma descrição geral sobre como essa maluquice funciona, e também informações gerais, como moedas e experiência disponíveis
+
+----------
+PERSONAGEM
+GET /personagem Retorna uma lista de personagens criadas
+
+GET /personagem/{personagemId} Retorna informações sobre uma personagem
+
+POST /personagem Cria uma nova personagem
+	Corpo: application/json {"nome":"string","classe":"enum=guerreiro|ladino|mago"}
+
+PUT /personagem/{personagemId} Altera informações de uma personagem
+	Corpo: application/json {"nome":"string"}
+
+PATCH /personagem/{personagemId} Adiciona experiência a uma personagem
+	Corpo: application/json {"experiencia":"int"}
+
+DELETE /personagem/{personagemId} Remove uma personagem
+
+------------------------
+INVENTÁRIO DA PERSONAGEM
+GET /personagem/{personagemId}/inventario Retorna os itens no inventário da personagem
+
+GET /personagem/{personagemId}/inventario/{itemId} Retorna informações sobre um item
+
+POST /personagem/{personagemId}/inventario Adiciona um item ao inventário da personagem, removendo de outra personagem, caso possua
+	Corpo: application/json {"itemId":"id"}
+
+PUT /personagem/{personagemId}/inventario/{itemId} Interage com um item no inventário da personagem
+	Corpo: application/json {"acao":"enum=consumir|equipar|utilizar"}
+
+DELETE /personagem/{personagemId}/inventario/{itemId} Remove um item do inventário da personagem, vendendo-o à loja
+
+---------------------------------------------------------------------------------------------------
+LOJA - ([storeItems] representam um item na vitrine da loja, e não são utilizáveis como os [items])
+GET /loja Retorna os itens à venda na loja
+
+GET /loja/{storeItemId} Retorna detalhes sobre um item na loja, como descrição e preço
+
+POST /loja/{storeItemId} Compra um ou mais itens da loja, gerando itemIds que podem ser adicionados ao inventário de uma personagem
+	Corpo: application/json {"quantidade":"int"}
+
+-------
+REGIOES
+GET /regioes Retorna as regiões disponíveis para aventura
+
+GET /regioes/{regiaoId} Retorna detalhes sobre a região
+
+---------
+AVENTURAS
+GET /aventuras Retorna lista de aventuras que já estão em progresso ou que foram concluídas
+
+GET /aventuras/{aventuraId} Retorna detalhes sobre a aventura
+
+POST /aventuras Gera uma nova aventura
+	Corpo: application/json {"regiaoId":"id"}
+
+DELETE /aventuras/{aventuraId} Abandona uma aventura em progresso, abrindo mão das recompensas de concluí-la e permitindo iniciar uma nova aventura
+
+
+---------
+ENCONTROS
+GET /aventuras/{aventuraId}/encontros Retorna uma lista de encontros concluídos nessa aventura, incluindo o encontro em progresso, se houver
+
+GET /aventuras/{aventuraId}/encontros/{encontroId} Retorna detalhes sobre o encontro
+
+POST /aventuras/{aventuraId}/encontros Gera um encontro relacionado a aventura, retornando o encontroId
+
+PUT /aventuras/{aventuraId}/encontros/{encontroId} Interage com o encontro
+	Corpo: application/json {"personagemId":"id","acao":"enum=atacar|conversar|pegar"}
+
+==============
+ÁREA DO MESTRE
