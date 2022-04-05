@@ -29,9 +29,10 @@ public class PersonagemService {
 		if (request.getNome() == null) throw new IllegalArgumentException("Nome deve ser informado");
 
 		// mapeamento
-		Personagem personagem = new Personagem(UUID.randomUUID());
-		personagem.setClasse(request.getClasse());
-		personagem.setNome(request.getNome());
+		Personagem personagem = new Personagem(
+			UUID.randomUUID(),
+			request.getNome(),
+			request.getClasse());
 
 		repository.save(personagem);
 	}
