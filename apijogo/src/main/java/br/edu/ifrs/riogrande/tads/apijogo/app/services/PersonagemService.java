@@ -22,7 +22,7 @@ public class PersonagemService {
 		this.repository = repository;
 	}
 
-	public void salvar(NovaPersonagemRequest request) {
+	public void salvar(NovaPersonagemRequest request) throws IllegalArgumentException {
 		// validação
 		Objects.requireNonNull(request, "É necessária uma requsição");
 		if (request.getClasse() == null) throw new IllegalArgumentException("Classe deve ser informada");

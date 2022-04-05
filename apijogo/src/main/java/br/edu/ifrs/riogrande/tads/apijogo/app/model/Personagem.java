@@ -31,7 +31,7 @@ public class Personagem {
     @Embedded
     private ClassePersonagem classeInfo;
     
-    public Personagem(UUID id, String nome, EnumClassePersonagem classe) throws Exception {
+    public Personagem(UUID id, String nome, EnumClassePersonagem classe) throws IllegalArgumentException {
         this.id = id;
         this.nome = nome;
         this.classe = classe;
@@ -48,7 +48,7 @@ public class Personagem {
         //         break;
         
             default:
-                throw new Exception("Necessário fornecer uma classe válida.");
+                throw new IllegalArgumentException("Necessário fornecer uma classe válida.");
         }
 	}
     
