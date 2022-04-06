@@ -40,12 +40,12 @@ public class Personagem {
             case Guerreiro:
                 classeInfo = new ClassePersonagemGuerreiro();
                 break;
-        //     case Ladino:
-        //         classeInfo = new ClassePersonagemLadino();
-        //         break;
-        //     case Mago:
-        //         classeInfo = new ClassePersonagemMago();
-        //         break;
+            case Ladino:
+                classeInfo = new ClassePersonagemLadino();
+                break;
+            case Mago:
+                classeInfo = new ClassePersonagemMago();
+                break;
         
             default:
                 throw new IllegalArgumentException("Necessário fornecer uma classe válida.");

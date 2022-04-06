@@ -10,7 +10,7 @@ public abstract class ClassePersonagem {
     protected long xp;
 
     @Column(name = "nivel", nullable = false, unique = false)
-    protected int nivel;
+    protected int nivel = 1;
 
     public abstract int getAtaque();
     public abstract int getDefesa();

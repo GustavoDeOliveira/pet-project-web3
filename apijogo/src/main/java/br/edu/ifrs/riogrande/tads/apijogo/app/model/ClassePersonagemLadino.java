@@ -1,10 +1,10 @@
 package br.edu.ifrs.riogrande.tads.apijogo.app.model;
 
-public class ClassePersonagemGuerreiro extends ClassePersonagem {
+public class ClassePersonagemLadino extends ClassePersonagem {
 
     public int getAtaque() {
         int nvl = getNivel();
-        return nvl + (int) Math.pow(nvl/10, 2);
+        return nvl + (int) Math.pow(nvl/2, 2);
     }
 
     public int getDefesa() {
@@ -14,11 +14,11 @@ public class ClassePersonagemGuerreiro extends ClassePersonagem {
 
     public int getVida() {
         int nvl = getNivel();
-        return nvl + (int) Math.pow(nvl, 2);
+        return nvl + (int) Math.pow(nvl/2, 2);
     }
 
     protected long getXpParaProximoNivel() {
         int nvl = getNivel();
-        return nvl * 10 + (int) Math.pow(nvl, 2);
+        return nvl * 10 + (int) Math.pow(nvl/2, 2);
     }
 }
