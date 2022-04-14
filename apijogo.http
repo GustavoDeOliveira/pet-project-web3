@@ -1,3 +1,14 @@
-host=http://localhost:8090
+@host="http://localhost:8090"
 
-GET {host}/api/v1/personagens HTTP/1.1
+GET {{host}}/api/v1/personagens HTTP/1.1
+Accept: application/json
+
+###
+POST {{host}}/api/v1/personagens HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+	"classe": "Guerreiro",
+	"nome": "Fulano de Tal"
+}

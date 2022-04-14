@@ -4,7 +4,7 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.model.enums.EnumClassePersonagem;
 
 public class NovaPersonagemRequest {
 
-	private EnumClassePersonagem classe; // chave
+	private EnumClassePersonagem classe;
 	private String nome;
 
 	public EnumClassePersonagem getClasse() {

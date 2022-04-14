@@ -6,31 +6,31 @@ GET / Retorna uma descrição geral sobre como essa maluquice funciona, e també
 
 ----------
 PERSONAGEM
-GET /personagem Retorna uma lista de personagens criadas
+GET /personagens Retorna uma lista de personagens criadas
 
-GET /personagem/{personagemId} Retorna informações sobre uma personagem
+GET /personagens/{personagemId} Retorna informações sobre uma personagem
 
-POST /personagem Cria uma nova personagem
+POST /personagens Cria uma nova personagem
 	Corpo: application/json {"nome":"string","classe":"enum=guerreiro|ladino|mago"}
 
-PUT /personagem/{personagemId} Altera informações de uma personagem
+PUT /personagens/{personagemId} Altera informações de uma personagem
 	Corpo: application/json {"nome":"string"}
 
-DELETE /personagem/{personagemId} Remove uma personagem
+DELETE /personagens/{personagemId} Remove uma personagem
 
 ------------------------
 INVENTÁRIO DA PERSONAGEM
-GET /personagem/{personagemId}/inventario Retorna os itens no inventário da personagem
+GET /personagens/{personagemId}/inventario Retorna os itens no inventário da personagem
 
-GET /personagem/{personagemId}/inventario/{itemId} Retorna informações sobre um item
+GET /personagens/{personagemId}/inventario/{itemId} Retorna informações sobre um item
 
-POST /personagem/{personagemId}/inventario Adiciona um item ao inventário da personagem, removendo de outra personagem, caso possua
+POST /personagens/{personagemId}/inventario Adiciona um item ao inventário da personagem, removendo de outra personagem, caso possua
 	Corpo: application/json {"itemId":"id"}
 
-PUT /personagem/{personagemId}/inventario/{itemId} Interage com um item no inventário da personagem
+PUT /personagens/{personagemId}/inventario/{itemId} Interage com um item no inventário da personagem
 	Corpo: application/json {"acao":"enum=consumir|equipar|utilizar"}
 
-DELETE /personagem/{personagemId}/inventario/{itemId} Remove um item do inventário da personagem, vendendo-o à loja
+DELETE /personagens/{personagemId}/inventario/{itemId} Remove um item do inventário da personagem, vendendo-o à loja
 
 ---------------------------------------------------------------------------------------------------
 LOJA - ([storeItems] representam um item na vitrine da loja, e não são utilizáveis como os [items])
