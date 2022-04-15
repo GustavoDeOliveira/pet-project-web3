@@ -2,7 +2,6 @@ package br.edu.ifrs.riogrande.tads.apijogo.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -15,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,72 +28,74 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.EntidadeNaoEncontradaException;
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.Personagem;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.PersonagemService;
-import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.EditarPersonagemRequest;
-import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.NovaPersonagemRequest;
+import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AtualizarPersonagemRequest;
+import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.CriarPersonagemRequest;
 
 @Validated
 @RestController
 @RequestMapping("/api/v1/personagens")
-public class PersonagemController { // definir o resource: Personagem (api Personagem)
+public class PersonagemController {
 
 	private final PersonagemService service;
 
-	@Autowired // Injeção de Dependência
+	@Autowired
 	public PersonagemController(PersonagemService service) {
 		this.service = service;
 	}
 
 	@PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> nova(
-			@RequestBody NovaPersonagemRequest body) {
+	public ResponseEntity<Object> criar(
+			@RequestBody CriarPersonagemRequest body) {
 
-		try {
-			service.salvar(body);
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} catch (IllegalArgumentException ex) {
-			return ResponseEntity
-					.status(HttpStatus.BAD_REQUEST)
-					.body(Map.of("erro", ex.getMessage()));
-		}
-	}
-
-	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> editar(
-			@PathVariable UUID id,
-			@RequestBody EditarPersonagemRequest body) {
-
-		try {
-			service.salvar(id, body);
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} catch (IllegalArgumentException ex) {
-			return ResponseEntity
-					.status(HttpStatus.BAD_REQUEST)
-					.body(Map.of("erro", ex.getMessage()));
-		} catch (EntidadeNaoEncontradaException ex) {
-			return ResponseEntity.notFound().build();
-		}
+		return ResponseEntity.ok(service.salvar(body));
 	}
 
 	@GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Personagem>> listar() {
 
-		List<Personagem> personagens = service.listar();
-
-		return ResponseEntity.ok(personagens);
+		return ResponseEntity.ok(service.listar());
 	}
 
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> ler(
-		@PathVariable UUID id) {
+			@PathVariable UUID id)
+			throws EntidadeNaoEncontradaException {
 
-		Optional<Personagem> personagem = service.find(id);
-
-		// retorno
-		if (personagem.isEmpty()) return ResponseEntity.notFound().build();
-
-		return ResponseEntity.ok(personagem.get());
+		return ResponseEntity.ok(service.carregar(id));
 	}
 
+	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> atualizar(
+			@PathVariable UUID id,
+			@RequestBody AtualizarPersonagemRequest body)
+			throws	IllegalArgumentException,
+					EntidadeNaoEncontradaException {
+
+		service.salvar(id, body);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> remover(
+			@PathVariable UUID id)
+			throws EntidadeNaoEncontradaException {
+
+		service.remover(id);
+		return ResponseEntity.ok().build();
+	}
+
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	@ResponseStatus(code = HttpStatus.NOT_FOUND)
+	Map<String, String> entidadeNaoEncontradaExceptionHandler(EntidadeNaoEncontradaException ex) {
+		return Map.of("erro", ex.getMessage());
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	Map<String, String> illegalArgumentExceptionHandler(IllegalArgumentException ex) {
+		return Map.of("erro", ex.getMessage());
+	}
+	
 	@ExceptionHandler(ConstraintViolationException.class)
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	Map<String, List<String>> constraintViolationExceptionHandler(ConstraintViolationException ex) {

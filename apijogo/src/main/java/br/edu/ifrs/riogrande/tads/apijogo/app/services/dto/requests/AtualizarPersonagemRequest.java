@@ -1,6 +1,6 @@
-package br.edu.ifrs.riogrande.tads.apijogo.app.services.dto;
+package br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests;
 
-public class EditarPersonagemRequest {
+public class AtualizarPersonagemRequest {
 
 	private String nome;
 

@@ -16,4 +16,6 @@ public interface PersonagemRepository extends Repository<Personagem, UUID> {
 
 	Optional<Personagem> findById(UUID id);
 
+	void removeById(UUID id);
+
 }

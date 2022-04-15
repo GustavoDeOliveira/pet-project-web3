@@ -1,8 +1,8 @@
-package br.edu.ifrs.riogrande.tads.apijogo.app.services.dto;
+package br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests;
 
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.enums.EnumClassePersonagem;
 
-public class NovaPersonagemRequest {
+public class CriarPersonagemRequest {
 
 	private EnumClassePersonagem classe;
 	private String nome;
