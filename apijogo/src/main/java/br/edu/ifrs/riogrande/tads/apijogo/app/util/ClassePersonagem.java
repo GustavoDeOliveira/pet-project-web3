@@ -1,15 +1,9 @@
-package br.edu.ifrs.riogrande.tads.apijogo.app.model;
+package br.edu.ifrs.riogrande.tads.apijogo.app.util;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
-@Embeddable
 public abstract class ClassePersonagem {
 
-    @Column(name = "xp", nullable = false, unique = false)
     protected long xp;
 
-    @Column(name = "nivel", nullable = false, unique = false)
     protected int nivel = 1;
 
     public abstract int getAtaque();

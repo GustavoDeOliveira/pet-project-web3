@@ -17,40 +17,19 @@ public class Personagem {
 
     @Id
     @GeneratedValue
-    private final UUID id;
+    private UUID id;
     
     @Column(name = "nome", length = 256, nullable = false, unique = false)
 	private String nome;
 
     @Column(name = "classe", nullable = false, unique = false)
-    private final EnumClassePersonagem classe;
+    private EnumClassePersonagem classe;
 
     @Column(name = "dano", nullable = false, unique = false)
     private int dano;
 
     @Embedded
-    private ClassePersonagem classeInfo;
-    
-    public Personagem(UUID id, String nome, EnumClassePersonagem classe) throws IllegalArgumentException {
-        this.id = id;
-        this.nome = nome;
-        this.classe = classe;
-
-        switch (classe) {
-            case Guerreiro:
-                classeInfo = new ClassePersonagemGuerreiro();
-                break;
-            case Ladino:
-                classeInfo = new ClassePersonagemLadino();
-                break;
-            case Mago:
-                classeInfo = new ClassePersonagemMago();
-                break;
-        
-            default:
-                throw new IllegalArgumentException("Necessário fornecer uma classe válida.");
-        }
-	}
+    private AtributosPersonagem atributos;
     
     public String getNome() {
         return nome;
@@ -63,36 +42,36 @@ public class Personagem {
         return classe;
     }
 
+    public void setClasse(EnumClassePersonagem classe) {
+        this.classe = classe;
+    }
+
     public UUID getId() {
         return id;
     }
 
-    public int getAtaque() {
-        return classeInfo.getAtaque();
+    public void setId(UUID id) {
+        this.id = id;
     }
 
-    public int getDefesa() {
-        return classeInfo.getDefesa();
+    public int getDano() {
+        return dano;
     }
 
-    public int getVida() {
-        return classeInfo.getVida();
+    public void setDano(int dano) {
+        this.dano = dano;
     }
 
-    public int getNivel() {
-        return classeInfo.getNivel();
+    public AtributosPersonagem getAtributos() {
+        return atributos;
     }
 
-    public long getXp() {
-        return classeInfo.getXp();
-    }
-
-    public boolean addXp(int qtd) {
-        return classeInfo.addXp(qtd);
+    public void setAtributos(AtributosPersonagem atributos) {
+        this.atributos = atributos;
     }
 
     @Override
 	public String toString() {
-		return String.format("Personagem %s, %s nível %d", nome, classe, getNivel());
+		return String.format("Personagem %s, %s nível %d", nome, classe, atributos.getNivel());
 	}
 }

@@ -13,15 +13,18 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.model.Personagem;
 import br.edu.ifrs.riogrande.tads.apijogo.app.repository.PersonagemRepository;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.EditarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.NovaPersonagemRequest;
+import br.edu.ifrs.riogrande.tads.apijogo.app.util.CalculadorAtributosPersonagem;
 
 @Service
 public class PersonagemService {
 
 	private final PersonagemRepository repository;
+	private CalculadorAtributosPersonagem calculadorAtributos;
 
 	@Autowired
-	public PersonagemService(PersonagemRepository repository) {
+	public PersonagemService(PersonagemRepository repository, CalculadorAtributosPersonagem calculadorAtributos) {
 		this.repository = repository;
+		this.calculadorAtributos = calculadorAtributos;
 	}
 
 	public void salvar(NovaPersonagemRequest request) throws IllegalArgumentException {
@@ -31,10 +34,14 @@ public class PersonagemService {
 		if (request.getNome() == null) throw new IllegalArgumentException("Nome deve ser informado");
 
 		// mapeamento
-		Personagem personagem = new Personagem(
-			UUID.randomUUID(),
-			request.getNome(),
-			request.getClasse());
+		Personagem personagem = new Personagem();
+
+		personagem.setId(UUID.randomUUID());
+		personagem.setNome(request.getNome());
+		personagem.setClasse(request.getClasse());
+
+		personagem.setAtributos(
+			calculadorAtributos.Calcular(personagem.getClasse(), 1, 0));
 
 		repository.save(personagem);
 	}

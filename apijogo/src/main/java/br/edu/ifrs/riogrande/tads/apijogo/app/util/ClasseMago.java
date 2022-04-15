@@ -1,6 +1,6 @@
-package br.edu.ifrs.riogrande.tads.apijogo.app.model;
+package br.edu.ifrs.riogrande.tads.apijogo.app.util;
 
-public class ClassePersonagemMago extends ClassePersonagem {
+public class ClasseMago extends ClassePersonagem {
 
     public int getAtaque() {
         int nvl = getNivel();
