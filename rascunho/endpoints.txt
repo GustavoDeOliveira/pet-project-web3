@@ -27,7 +27,7 @@ GET /personagens/{personagemId}/inventario/{itemId} Retorna informações sobre 
 POST /personagens/{personagemId}/inventario Adiciona um item ao inventário da personagem, removendo de outra personagem, caso possua
 	Corpo: application/json {"itemId":"id"}
 
-PUT /personagens/{personagemId}/inventario/{itemId} Interage com um item no inventário da personagem
+PATCH /personagens/{personagemId}/inventario/{itemId} Interage com um item no inventário da personagem
 	Corpo: application/json {"acao":"enum=consumir|equipar|utilizar"}
 
 DELETE /personagens/{personagemId}/inventario/{itemId} Remove um item do inventário da personagem, vendendo-o à loja

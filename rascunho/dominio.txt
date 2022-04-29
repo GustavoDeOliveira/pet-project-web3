@@ -14,3 +14,30 @@ enum classe - Guerreiro|Ladino|Mago
 Personagens de [classes] diferentes precisam de quantidades diferentes de [xp] para subir de [nível],
     com uma fórmula parecida com (nivel*10)+(nivel*0.1)² para determinar o [xp] necessário para passar ao próximo [nível].
     Ao subir de [nível], o personagem também aumenta [vida], [ataque] e [defesa], em valores estabelecidos pela [classe].
+
+
+Inventário do Personagem / Item
+
+string nome
+decimal valor
+[efeito] efeito - efeitos que o item causa no personagem quando interagido
+int? duracao - por quantos encontros o efeito dura quando consumido
+            Quando um item possui esse valor ele é um consumível,
+            e deixará de existir após aplicar o efeito.
+
+
+Item / Efeito
+
+int vida
+int ataque
+int defesa
+int cura - valores negativos causam dano.
+            Diferente dos outros atributos, esse se aplica cumulativamente.
+
+
+
+Relação Efeito <-> Personagem
+
+[efeito] efeito
+[personagem] personagem
+int? encontrosRestantes

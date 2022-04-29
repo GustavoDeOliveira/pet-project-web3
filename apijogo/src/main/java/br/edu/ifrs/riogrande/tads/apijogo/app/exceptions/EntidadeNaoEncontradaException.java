@@ -8,4 +8,8 @@ public class EntidadeNaoEncontradaException extends Exception {
         super(String.format("Não foi possível encontrar %s com id %s", entityClass, entityId));
     }
 
+    public EntidadeNaoEncontradaException(UUID entityId, Class<?> entityClass) {
+        this(entityId, entityClass.getSimpleName());
+    }
+
 }
