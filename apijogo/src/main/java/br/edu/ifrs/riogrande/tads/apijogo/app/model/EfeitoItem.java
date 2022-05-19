@@ -3,11 +3,15 @@ package br.edu.ifrs.riogrande.tads.apijogo.app.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Embeddable
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EfeitoItem {
 
     @Column(name = "ataque", nullable = false, unique = false)

@@ -7,25 +7,23 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "itens")
+@Table(name = "produtos")
 @Getter @Setter
-public class Item {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Produto {
 
     @Id
     @GeneratedValue
     private UUID id;
-
-    @ManyToOne
-    @JoinColumn(name = "personagem_id", nullable = true)
-    private Personagem personagem;
     
     @Column(name = "nome", length = 256, nullable = false, unique = true)
 	private String nome;
@@ -38,4 +36,7 @@ public class Item {
     
     @Column(name = "duracao", nullable = true, unique = false)
     private Integer duracao;
+
+    @Column(name = "estoque", nullable = false, unique = false)
+    private Integer estoque;
 }

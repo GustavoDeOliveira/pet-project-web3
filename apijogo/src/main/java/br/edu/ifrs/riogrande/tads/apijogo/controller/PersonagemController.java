@@ -3,30 +3,20 @@ package br.edu.ifrs.riogrande.tads.apijogo.controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,7 +35,7 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.responses.PersonagemC
 @Validated
 @RestController
 @RequestMapping("/api/v1/personagens")
-public class PersonagemController {
+public class PersonagemController extends Controller {
 
 	private final PersonagemService service;
 	private final InventarioService inventarioService;
@@ -123,25 +113,5 @@ public class PersonagemController {
 			throws EntidadeNaoEncontradaException {
 
 		return ResponseEntity.ok(inventarioService.carregar(personagemId, itemId));
-	}
-
-	@ExceptionHandler(EntidadeNaoEncontradaException.class)
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	Map<String, String> entidadeNaoEncontradaExceptionHandler(EntidadeNaoEncontradaException ex) {
-		return Map.of("erro", ex.getMessage());
-	}
-
-	@ExceptionHandler(IllegalArgumentException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	Map<String, String> illegalArgumentExceptionHandler(IllegalArgumentException ex) {
-		return Map.of("erro", ex.getMessage());
-	}
-	
-	@ExceptionHandler(ConstraintViolationException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	Map<String, List<String>> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-		Set<ConstraintViolation<?>> violations = ex.getConstraintViolations();
-		List<String> erros = violations.stream().map(v -> v.getMessage()).collect(Collectors.toList());
-		return Map.of("erros", erros);
 	}
 }

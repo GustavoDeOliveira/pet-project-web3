@@ -1,4 +1,4 @@
-@host="http://localhost:8090"
+@host=http://localhost:8090
 
 GET {{host}}/api/v1/personagens HTTP/1.1
 Accept: application/json
@@ -12,3 +12,30 @@ Content-Type: application/json
 	"classe": "Guerreiro",
 	"nome": "Fulano de Tal"
 }
+
+###
+GET {{host}}/api/v1/personagens/a4bcc882-e8e5-4ca4-a62e-dea12925eb14/inventario HTTP/1.1
+Accept: application/json
+
+###
+POST {{host}}/api/v1/personagens/a4bcc882-e8e5-4ca4-a62e-dea12925eb14/inventario HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+	"itemId": "fae7d30c-df81-4e4b-9253-8135b61c14c6"
+}
+
+###
+GET {{host}}/api/v1/loja
+Accept: application/json
+
+
+###
+POST {{host}}/api/v1/loja/31294bbb-a52d-4834-9db4-f5f569d0be2f
+Accept: application/json
+
+###
+15d8945e-e02c-4242-9e05-2bb605dcda9d
+
+fae7d30cdf814e4b92538135b61c14c6

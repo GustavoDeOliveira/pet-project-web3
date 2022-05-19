@@ -19,7 +19,9 @@ Personagens de [classes] diferentes precisam de quantidades diferentes de [xp] p
 Inventário do Personagem / Item
 
 string nome
-decimal valor
+decimal valor - valor de venda do item. Quando equipado, diminui em 5%
+            a cada encontro em que a personagem que o equipa participa.
+
 [efeito] efeito - efeitos que o item causa no personagem quando interagido
 int? duracao - por quantos encontros o efeito dura quando consumido
             Quando um item possui esse valor ele é um consumível,
@@ -41,3 +43,18 @@ Relação Efeito <-> Personagem
 [efeito] efeito
 [personagem] personagem
 int? encontrosRestantes
+
+
+
+Loja de Itens / Produto (item da loja)
+
+É possível >comprar um produto na loja, o que irá deduzir 1 do [estoque],
+            deduzir [valor] dos cofres do grupo (não implementado ainda)
+            e gerar um {item} com as mesmas características do produto.
+
+string nome
+decimal valor
+{efeito} efeito
+int? duracao
+int estoque - diminui a cada vez que o produto é comprado.
+            Quando zero, não se pode mais comprar o produto.

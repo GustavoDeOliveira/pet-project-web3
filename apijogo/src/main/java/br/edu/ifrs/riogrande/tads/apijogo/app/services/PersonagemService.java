@@ -81,7 +81,7 @@ public class PersonagemService {
 	public Optional<Personagem> carregar(UUID id) throws EntidadeNaoEncontradaException {
 		Optional<Personagem> p = repository.findById(id);
 
-		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class.getSimpleName());
+		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 
 		return p;
 	}
@@ -91,7 +91,7 @@ public class PersonagemService {
 
 		Optional<Personagem> p = repository.findById(id);
 
-		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class.getSimpleName());
+		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 		
 		repository.removeById(id);
 	}
