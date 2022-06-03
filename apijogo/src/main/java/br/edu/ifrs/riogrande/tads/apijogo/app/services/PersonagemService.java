@@ -78,12 +78,12 @@ public class PersonagemService {
 		return repository.findAll();
 	}
 
-	public Optional<Personagem> carregar(UUID id) throws EntidadeNaoEncontradaException {
+	public Personagem carregar(UUID id) throws EntidadeNaoEncontradaException {
 		Optional<Personagem> p = repository.findById(id);
 
 		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 
-		return p;
+		return p.get();
 	}
 
 	public void remover(UUID id)

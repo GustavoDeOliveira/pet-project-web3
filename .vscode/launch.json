@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApijogoApplication<apijogo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            // "console": "internalConsole",
+            "args": "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000",
+            "mainClass": "br.edu.ifrs.riogrande.tads.apijogo.ApijogoApplication",
+            "projectName": "apijogo",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

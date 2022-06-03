@@ -68,11 +68,11 @@ public class LojaService {
 		return repository.findAll();
 	}
 
-	public Optional<Produto> carregar(UUID id) throws EntidadeNaoEncontradaException {
+	public Produto carregar(UUID id) throws EntidadeNaoEncontradaException {
 		Optional<Produto> p = repository.findById(id);
 
 		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Produto.class);
 
-		return p;
+		return p.get();
 	}
 }

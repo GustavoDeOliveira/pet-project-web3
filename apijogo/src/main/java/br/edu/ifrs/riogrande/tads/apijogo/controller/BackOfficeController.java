@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Validated
 @RestController
 @RequestMapping("/api/v1/backoffice")
-public class BackOfficeController extends Controller {
+public class BackOfficeController {
 
 	private final ProdutoRepository produtoRepository;
 
