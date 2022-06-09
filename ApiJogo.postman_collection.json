@@ -1,0 +1,400 @@
+{
+	"info": {
+		"_postman_id": "e3132340-aac8-4f7d-85fc-9118c02443eb",
+		"name": "ApiJogo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20530927"
+	},
+	"item": [
+		{
+			"name": "Personagens",
+			"item": [
+				{
+					"name": "Inventario",
+					"item": [
+						{
+							"name": "v1/personagens/{pid}/inventario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"itemId\": \"a0bdf589-327a-4288-841b-7165934c9cff\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}/inventario",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"personagens",
+										"{{idPersonagem}}",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1/personagens/{pid}/inventario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}/inventario/a0bdf589-327a-4288-841b-7165934c9cff",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"personagens",
+										"{{idPersonagem}}",
+										"inventario",
+										"a0bdf589-327a-4288-841b-7165934c9cff"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1/personagens/{pid}/inventario/{id}",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"personagens",
+										"{{idPersonagem}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1/personagens/{pid}/inventario/{id}",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"nome\": \"da Silva\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"personagens",
+										"{{idPersonagem}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "v1/personagens/{pid}/inventario/{id}",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"xp\": 100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"personagens",
+										"{{idPersonagem}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "v1/personagens",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"classe\": \"Guerreiro\",\r\n\t\"nome\": \"Fulano de Tal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/personagens",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"personagens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/personagens",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/personagens/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"personagens",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/personagens/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"personagens",
+								"{{idPersonagem}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/personagens/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"nome\": \"da Silva\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"personagens",
+								"{{idPersonagem}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/personagens/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"xp\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/personagens/{{idPersonagem}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"personagens",
+								"{{idPersonagem}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loja",
+			"item": [
+				{
+					"name": "v1/loja/{id}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"classe\": \"Guerreiro\",\r\n\t\"nome\": \"Fulano de Tal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/loja/{{idItem}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"loja",
+								"{{idItem}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/loja",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/loja",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"loja"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v1/loja/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/loja/{{idItem}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"loja",
+								"{{idItem}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seed",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/backoffice",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"backoffice"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idPersonagem",
+			"value": "0c171ea4-b4c9-4fec-b343-d50e0587ae36",
+			"type": "string"
+		},
+		{
+			"key": "idItem",
+			"value": "0c171ea4-b4c9-4fec-b343-d50e0587ae36",
+			"type": "string"
+		}
+	]
+}
