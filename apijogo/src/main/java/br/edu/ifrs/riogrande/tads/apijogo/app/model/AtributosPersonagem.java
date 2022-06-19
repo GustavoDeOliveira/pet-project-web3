@@ -3,7 +3,11 @@ package br.edu.ifrs.riogrande.tads.apijogo.app.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Embeddable
+@Getter @Setter
 public class AtributosPersonagem {
 
     @Column(name = "xp", nullable = false, unique = false)
@@ -11,6 +15,9 @@ public class AtributosPersonagem {
 
     @Column(name = "nivel", nullable = false, unique = false)
     private int nivel = 1;
+
+    @Column(name = "xp_para_proximo_nivel", nullable = false, unique = false)
+    private long xpParaProximoNivel;
 
     @Column(name = "ataque", nullable = false, unique = false)
     private int ataque;
@@ -24,42 +31,4 @@ public class AtributosPersonagem {
     public long getXp() {
         return xp;
     }
-
-    public void setXp(long xp) {
-        this.xp = xp;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-
-    public int getAtaque() {
-        return ataque;
-    }
-
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
-    }
-
-    public int getDefesa() {
-        return defesa;
-    }
-
-    public void setDefesa(int defesa) {
-        this.defesa = defesa;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public void setVida(int vida) {
-        this.vida = vida;
-    }
-
-    
 }

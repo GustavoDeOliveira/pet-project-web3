@@ -12,11 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,9 +31,12 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.services.InventarioService;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.PersonagemService;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AdicionadoNoInventarioResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AdicionarNoInventarioRequest;
+import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AdicionarXpRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AtualizarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.CriarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ErroResponse;
+import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ItemResumoResponse;
+import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.MetaResponseWrapper;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.PersonagemDetalheResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.PersonagemResumoResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ResponseWrapper;
@@ -44,7 +49,7 @@ import io.swagger.annotations.ResponseHeader;
 @Validated
 @RestController
 @RequestMapping("/api/v1/personagens")
-public class PersonagemController {
+public class PersonagemController extends BaseController {
 
 	private final PersonagemService service;
 	private final InventarioService inventarioService;
@@ -60,30 +65,19 @@ public class PersonagemController {
 
 		var response = service.salvar(body);
 
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest()
-			.path("/{personagemId}")
-			.buildAndExpand(Map.of(
-				"personagemId", response.getId())).toUri();
-
-		return ResponseEntity.created(location).build();
+		return created(
+			"/{personagemId}",
+			Map.of("personagemId", response.getId()));
 	}
 
 	@GetMapping(path = "", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseWrapper<List<PersonagemResumoResponse>, ListMeta>> listar() {
+	public ResponseEntity<MetaResponseWrapper<List<PersonagemResumoResponse>, ListMeta>> listar() {
 
-		var personagens = service.listar();
-		var total = personagens.size();
-
-		return ResponseEntity.ok(ResponseWrapper.wrap(
-			personagens.stream()
-				.map(p -> PersonagemResumoResponse.from(p))
-				.collect(Collectors.toList()),
-			new ListMeta(total, 0, total)));
+		return listResponse(service.listar(), (p) -> PersonagemResumoResponse.from(p));
 	}
 
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseWrapper<PersonagemDetalheResponse, Void>> ler(
+	public ResponseEntity<ResponseWrapper<PersonagemDetalheResponse>> ler(
 			@PathVariable UUID id)
 			throws EntidadeNaoEncontradaException {
 
@@ -113,29 +107,39 @@ public class PersonagemController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PatchMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseWrapper<PersonagemDetalheResponse>> adicionarXp(
+			@PathVariable UUID id,
+			@RequestBody AdicionarXpRequest request)
+			throws EntidadeNaoEncontradaException {
+		service.adicionarXp(id, request);
+		var personagem = service.carregar(id);
+
+		return ResponseEntity.ok(ResponseWrapper.wrap(
+			PersonagemDetalheResponse.from(personagem)));
+	}
 
 	@PostMapping(path = "/{personagemId}/inventario", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> adicionarNoInventario(
 			@PathVariable UUID personagemId,
-			@RequestBody AdicionarNoInventarioRequest body) throws IllegalArgumentException, EntidadeNaoEncontradaException {
+			@RequestBody AdicionarNoInventarioRequest body)
+			throws IllegalArgumentException,
+			EntidadeNaoEncontradaException {
 
 		AdicionadoNoInventarioResponse response = inventarioService.adicionarNoInventario(personagemId, body);
 		
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest()
-			.path("/{personagemId}/inventario/{itemId}")
-			.buildAndExpand(Map.of(
+		return created(
+			"/{personagemId}/inventario/{itemId}", 
+			Map.of(
 				"personagemId", personagemId,
-				"itemId", response.getItemId())).toUri();
-
-		return ResponseEntity.created(location).build();
+				"itemId", response.getItemId()));
 	}
 
 	@GetMapping(path = "/{personagemId}/inventario", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Item>> listarInventario(
+	public ResponseEntity<MetaResponseWrapper<List<ItemResumoResponse>, ListMeta>> listarInventario(
 			@PathVariable UUID personagemId) {
 
-		return ResponseEntity.ok(inventarioService.listar(personagemId));
+		return listResponse(inventarioService.listar(personagemId), (i) -> ItemResumoResponse.from(i));
 	}
 
 	@GetMapping(path = "/{personagemId}/inventario/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -8,7 +8,7 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.model.enums.EnumClassePersonagem;
 @Component
 public class CalculadorAtributosPersonagem {
 
-    public AtributosPersonagem Calcular(EnumClassePersonagem enumClasse, int nivel, long xp) {
+    public AtributosPersonagem Calcular(EnumClassePersonagem enumClasse, long xp) {
 
         ClassePersonagem classe;
 
@@ -27,15 +27,9 @@ public class CalculadorAtributosPersonagem {
                 throw new IllegalArgumentException("Necessário fornecer uma classe válida.");
         }
 
-        AtributosPersonagem atributos = new AtributosPersonagem();
+        classe.addXp(xp);
 
-        atributos.setXp(xp);
-        atributos.setNivel(nivel);
-        atributos.setVida(classe.getVida());
-        atributos.setAtaque(classe.getAtaque());
-        atributos.setDefesa(classe.getDefesa());
-
-        return atributos;
+        return classe.comoAtributos();
     }
 
 }

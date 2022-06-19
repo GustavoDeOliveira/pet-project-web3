@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.EntidadeNaoEncontradaException;
+import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.LojaSemEstoqueException;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ErroResponse;
 
 @ControllerAdvice
@@ -25,14 +26,17 @@ public class ErrorControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
 	protected ResponseEntity<ErroResponse> entidadeNaoEncontradaExceptionHandler(EntidadeNaoEncontradaException ex) {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND)
-		.body(new ErroResponse(Collections.singletonList(ex.getMessage())));
+		return serviceExceptionHandler(ex, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
 	protected ResponseEntity<ErroResponse> illegalArgumentExceptionHandler(IllegalArgumentException ex) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-		.body(new ErroResponse(Collections.singletonList(ex.getMessage())));
+		return serviceExceptionHandler(ex, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(LojaSemEstoqueException.class)
+	protected ResponseEntity<ErroResponse> lojaSemEstoqueExceptionHandler(LojaSemEstoqueException ex) {
+		return serviceExceptionHandler(ex, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 	
 	@ExceptionHandler(ConstraintViolationException.class)
@@ -55,5 +59,10 @@ public class ErrorControllerAdvice extends ResponseEntityExceptionHandler {
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(new ErroResponse(erros));
+	}
+
+	private ResponseEntity<ErroResponse> serviceExceptionHandler(Exception ex, HttpStatus status) {
+		return ResponseEntity.status(status)
+		.body(new ErroResponse(Collections.singletonList(ex.getMessage())));
 	}
 }

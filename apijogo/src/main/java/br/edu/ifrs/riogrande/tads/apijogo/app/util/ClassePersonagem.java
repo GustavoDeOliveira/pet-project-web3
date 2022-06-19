@@ -1,5 +1,7 @@
 package br.edu.ifrs.riogrande.tads.apijogo.app.util;
 
+import br.edu.ifrs.riogrande.tads.apijogo.app.model.AtributosPersonagem;
+
 public abstract class ClassePersonagem {
 
     protected long xp;
@@ -20,12 +22,26 @@ public abstract class ClassePersonagem {
         return xp;
     }
 
-    public final boolean addXp(int qtd) {
+    public final boolean addXp(long qtd) {
         xp += qtd;
-        if (getXpParaProximoNivel() <= xp) {
+        boolean levelUp = false;
+        while (getXpParaProximoNivel() <= xp) {
             nivel++;
-            return true;
+            levelUp = true;
         }
-        return false;
+        return levelUp;
+    }
+
+    public final AtributosPersonagem comoAtributos() {
+        AtributosPersonagem atributos = new AtributosPersonagem();
+
+        atributos.setXp(getXp());
+        atributos.setNivel(getNivel());
+        atributos.setVida(getVida());
+        atributos.setAtaque(getAtaque());
+        atributos.setDefesa(getDefesa());
+        atributos.setXpParaProximoNivel(getXpParaProximoNivel());
+
+        return atributos;
     }
 }

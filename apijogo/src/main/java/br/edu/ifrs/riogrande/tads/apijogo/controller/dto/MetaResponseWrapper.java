@@ -5,24 +5,22 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 @ApiModel(value = "ServerResponse")
-@Getter @Setter
-public class ResponseWrapper<T> { // Generics, Templates
+public class MetaResponseWrapper<T, M> extends ResponseWrapper<T> {
 
-	@ApiModelProperty(value = "data")
+    @ApiModelProperty(value = "meta")
     @JsonInclude(value = Include.NON_NULL)
-	protected final T data; // payload
+	private final M meta;
 
-	protected ResponseWrapper(T data) {
-		this.data = data;
+	protected MetaResponseWrapper(T data, M meta) {
+		super(data);
+		this.meta = meta;
 	}
 
 	// inferência do tipo, método fábrica
-	public static <T> ResponseWrapper<T> wrap(T response) {
-		return new ResponseWrapper<T>(response);
+	public static <T, M> MetaResponseWrapper<T, M> wrap(T response, M meta) {
+		return new MetaResponseWrapper<T, M>(response, meta);
 	}
 
 }

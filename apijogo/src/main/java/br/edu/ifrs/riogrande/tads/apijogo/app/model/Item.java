@@ -27,7 +27,7 @@ public class Item {
     @JoinColumn(name = "personagem_id", nullable = true)
     private Personagem personagem;
     
-    @Column(name = "nome", length = 256, nullable = false, unique = true)
+    @Column(name = "nome", length = 256, nullable = false, unique = false)
 	private String nome;
 
     @Column(name = "valor", nullable = false, unique = false)
@@ -38,4 +38,14 @@ public class Item {
     
     @Column(name = "duracao", nullable = true, unique = false)
     private Integer duracao;
+
+    public static Item from(Produto produto) {
+        var item = new Item();
+        item.setNome(produto.getNome());
+        item.setValor(produto.getValor());
+        item.setDuracao(produto.getDuracao());
+        item.setEfeito(produto.getEfeito());
+
+        return item;
+    }
 }

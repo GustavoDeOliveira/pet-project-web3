@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.EntidadeNaoEncontradaException;
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.LojaSemEstoqueException;
-import br.edu.ifrs.riogrande.tads.apijogo.app.model.Item;
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.Produto;
 import br.edu.ifrs.riogrande.tads.apijogo.app.repository.ItemRepository;
 import br.edu.ifrs.riogrande.tads.apijogo.app.repository.ProdutoRepository;
@@ -42,26 +41,12 @@ public class LojaService {
                 request.getProdutoId(),
                 Produto.class));
 
-        if (produto.getEstoque() < 1)
-            throw new LojaSemEstoqueException(produto);
+        var item = produto.comprar();
 
-        var item = new Item();
-        item.setId(UUID.randomUUID());
-        item.setNome(produto.getNome());
-        item.setValor(produto.getValor());
-        item.setDuracao(produto.getDuracao());
-        item.setEfeito(produto.getEfeito());
+        item = itemRepository.save(item);
+        produto = repository.save(produto);
 
-        itemRepository.save(item);
-
-        produto.setEstoque(produto.getEstoque() - 1);
-
-        repository.save(produto);
-
-        var response = new ItemCompradoResponse();
-        response.setItemId(item.getId());
-
-        return response;
+        return new ItemCompradoResponse(item.getId());
     }
 
     public List<Produto> listar() {

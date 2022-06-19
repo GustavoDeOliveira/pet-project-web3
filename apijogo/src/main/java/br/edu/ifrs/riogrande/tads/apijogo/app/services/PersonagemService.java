@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.EntidadeNaoEncontradaException;
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.Personagem;
 import br.edu.ifrs.riogrande.tads.apijogo.app.repository.PersonagemRepository;
+import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AdicionarXpRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AtualizarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.CriarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.responses.PersonagemCriadoResponse;
@@ -41,7 +42,7 @@ public class PersonagemService {
 		personagem.setNome(request.getNome());
 		personagem.setClasse(request.getClasse());
 		personagem.setAtributos(
-			calculadorAtributos.Calcular(personagem.getClasse(), 1, 0));
+			calculadorAtributos.Calcular(personagem.getClasse(), 0));
 
 		// execução
 		personagem = repository.save(personagem);
@@ -94,6 +95,22 @@ public class PersonagemService {
 		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 		
 		repository.removeById(id);
+	}
+
+	public void adicionarXp(UUID id, AdicionarXpRequest request) throws EntidadeNaoEncontradaException {
+
+		if (request.getXp() < 0)
+			throw new IllegalArgumentException("Não é possível remover xp de uma personagem.");
+
+		Optional<Personagem> p = repository.findById(id);
+
+		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
+
+		var personagem = p.get();
+		personagem.setAtributos(
+			calculadorAtributos.Calcular(personagem.getClasse(), personagem.getAtributos().getXp() + request.getXp()));
+
+		personagem = repository.save(personagem);
 	}
 
 }

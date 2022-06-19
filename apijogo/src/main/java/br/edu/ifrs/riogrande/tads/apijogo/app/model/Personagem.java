@@ -1,5 +1,6 @@
 package br.edu.ifrs.riogrande.tads.apijogo.app.model;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -7,11 +8,14 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.enums.EnumClassePersonagem;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "personagens")
 public class Personagem {
 
@@ -30,48 +34,7 @@ public class Personagem {
 
     @Embedded
     private AtributosPersonagem atributos;
-    
-    public String getNome() {
-        return nome;
-    }
-	public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
-    public EnumClassePersonagem getClasse() {
-        return classe;
-    }
 
-    public void setClasse(EnumClassePersonagem classe) {
-        this.classe = classe;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public int getDano() {
-        return dano;
-    }
-
-    public void setDano(int dano) {
-        this.dano = dano;
-    }
-
-    public AtributosPersonagem getAtributos() {
-        return atributos;
-    }
-
-    public void setAtributos(AtributosPersonagem atributos) {
-        this.atributos = atributos;
-    }
-
-    @Override
-	public String toString() {
-		return String.format("Personagem %s, %s nível %d", nome, classe, atributos.getNivel());
-	}
+    @OneToMany(mappedBy = "personagem")
+    private List<Item> inventario;
 }

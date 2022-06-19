@@ -36,13 +36,13 @@ public class PersonagemDetalheResponse {
     int nivel;
 
     @ApiModelProperty
-    int ataque;
+    long xpParaProximoNivel;
 
     @ApiModelProperty
-    int defesa;
+    AtributosPersonagemResponse atributosBase;
 
     @ApiModelProperty
-    int vida;  
+    AtributosPersonagemResponse atributosEquipado;
     
     public static PersonagemDetalheResponse from(Personagem p) {
         return new PersonagemDetalheResponse(p.getId(),
@@ -51,8 +51,9 @@ public class PersonagemDetalheResponse {
         p.getDano(),
         p.getAtributos().getXp(),
         p.getAtributos().getNivel(),
-        p.getAtributos().getAtaque(),
-        p.getAtributos().getDefesa(),
-        p.getAtributos().getVida());
+        p.getAtributos().getXpParaProximoNivel(),
+        new AtributosPersonagemResponse(p, false),
+        new AtributosPersonagemResponse(p, true)
+        );
     }
 }

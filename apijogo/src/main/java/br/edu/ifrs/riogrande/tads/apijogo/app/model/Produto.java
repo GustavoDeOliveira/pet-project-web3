@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.LojaSemEstoqueException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,4 +40,14 @@ public class Produto {
 
     @Column(name = "estoque", nullable = false, unique = false)
     private Integer estoque;
+
+    public Item comprar() throws LojaSemEstoqueException {
+
+        if (this.getEstoque() < 1)
+            throw new LojaSemEstoqueException(this);
+
+        this.setEstoque(this.getEstoque() - 1);
+
+        return Item.from(this);
+    }
 }
