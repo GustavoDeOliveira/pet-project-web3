@@ -119,7 +119,7 @@ public class PersonagemController extends BaseController {
 			PersonagemDetalheResponse.from(personagem)));
 	}
 
-	@PostMapping(path = "/{personagemId}/inventario", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PatchMapping(path = "/{personagemId}/inventario", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> adicionarNoInventario(
 			@PathVariable UUID personagemId,
 			@RequestBody AdicionarNoInventarioRequest body)
