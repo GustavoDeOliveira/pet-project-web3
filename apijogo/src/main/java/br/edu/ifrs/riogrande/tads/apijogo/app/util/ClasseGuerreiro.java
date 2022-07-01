@@ -2,6 +2,10 @@ package br.edu.ifrs.riogrande.tads.apijogo.app.util;
 
 public class ClasseGuerreiro extends ClassePersonagem {
 
+    public ClasseGuerreiro(long xp) {
+        super(xp);
+    }
+
     public int getAtaque() {
         int nvl = getNivel();
         return nvl + (int) Math.pow(nvl/10, 2);

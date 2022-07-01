@@ -1,30 +1,21 @@
 package br.edu.ifrs.riogrande.tads.apijogo.app.model;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.LojaSemEstoqueException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "produtos")
-@Getter @Setter
-@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class Produto {
-
-    @Id
-    @GeneratedValue
-    private UUID id;
+public class Produto extends Entidade {
     
     @Column(name = "nome", length = 256, nullable = false, unique = true)
 	private String nome;
@@ -40,6 +31,14 @@ public class Produto {
 
     @Column(name = "estoque", nullable = false, unique = false)
     private Integer estoque;
+
+    public Produto(String nome, double valor, EfeitoItem efeito, Integer duracao, Integer estoque) {
+        this.nome = nome;
+        this.valor = valor;
+        this.efeito = efeito;
+        this.duracao = duracao;
+        this.estoque = estoque;
+    }
 
     public Item comprar() throws LojaSemEstoqueException {
 

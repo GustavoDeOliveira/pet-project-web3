@@ -8,6 +8,12 @@ public abstract class ClassePersonagem {
 
     protected int nivel = 1;
 
+    public ClassePersonagem(long xp) {
+        addXp(xp);
+    }
+
+    public ClassePersonagem() { }
+
     public abstract int getAtaque();
     public abstract int getDefesa();
     public abstract int getVida();
@@ -22,14 +28,12 @@ public abstract class ClassePersonagem {
         return xp;
     }
 
-    public final boolean addXp(long qtd) {
+    public final ClassePersonagem addXp(long qtd) {
         xp += qtd;
-        boolean levelUp = false;
         while (getXpParaProximoNivel() <= xp) {
             nivel++;
-            levelUp = true;
         }
-        return levelUp;
+        return this;
     }
 
     public final AtributosPersonagem comoAtributos() {

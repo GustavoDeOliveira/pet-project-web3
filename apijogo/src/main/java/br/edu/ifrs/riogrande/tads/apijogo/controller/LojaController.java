@@ -19,11 +19,14 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.exceptions.LojaSemEstoqueException
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.LojaService;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.ComprarItemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.responses.ItemCompradoResponse;
+import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ErroResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.MetaResponseWrapper;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ProdutoDetalheResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ProdutoResumoResponse;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.ResponseWrapper;
 import br.edu.ifrs.riogrande.tads.apijogo.controller.dto.metadata.ListMeta;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RequiredArgsConstructor
 @Validated
@@ -40,9 +43,13 @@ public class LojaController extends BaseController {
 
 		return listResponse(produtos, (p) -> ProdutoResumoResponse.from(p));
 	}
-
+	
+	@ApiResponses(value = {
+		@ApiResponse(code = 400, message = "Dados da requisição inválidos.", response = ErroResponse.class),
+		@ApiResponse(code = 404, message = "Produto não encontrado.", response = ErroResponse.class),
+		@ApiResponse(code = 200, message = "Produto carregado com sucesso.", response = ResponseWrapper.class)})
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseWrapper<ProdutoDetalheResponse>> ler(
+	public ResponseEntity<?> ler(
 			@PathVariable UUID id)
 			throws EntidadeNaoEncontradaException {
 		
@@ -51,8 +58,13 @@ public class LojaController extends BaseController {
 		return ResponseEntity.ok(ResponseWrapper.wrap(ProdutoDetalheResponse.from(produto)));
 	}
 
+	@ApiResponses(value = {
+		@ApiResponse(code = 400, message = "Dados da requisição inválidos.", response = ErroResponse.class),
+		@ApiResponse(code = 404, message = "Produto não encontrado.", response = ErroResponse.class),
+		@ApiResponse(code = 422, message = "Não é possível comprar o item.", response = ErroResponse.class),
+		@ApiResponse(code = 200, message = "Item comprado com sucesso.", response = ResponseWrapper.class)})
 	@PatchMapping(path = "/{id}")
-	public ResponseEntity<ResponseWrapper<ItemCompradoResponse>> comprarItem(
+	public ResponseEntity<?> comprarItem(
 			@PathVariable UUID id)
 			throws IllegalArgumentException,
 				EntidadeNaoEncontradaException,

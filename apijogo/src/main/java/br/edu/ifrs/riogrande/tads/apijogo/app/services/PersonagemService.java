@@ -15,34 +15,23 @@ import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AdicionarXpR
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.AtualizarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.requests.CriarPersonagemRequest;
 import br.edu.ifrs.riogrande.tads.apijogo.app.services.dto.responses.PersonagemCriadoResponse;
-import br.edu.ifrs.riogrande.tads.apijogo.app.util.CalculadorAtributosPersonagem;
 
 @Service
 public class PersonagemService {
 
 	private final PersonagemRepository repository;
-	private CalculadorAtributosPersonagem calculadorAtributos;
 
 	@Autowired
-	public PersonagemService(PersonagemRepository repository, CalculadorAtributosPersonagem calculadorAtributos) {
+	public PersonagemService(PersonagemRepository repository) {
 		this.repository = repository;
-		this.calculadorAtributos = calculadorAtributos;
 	}
 
 	public PersonagemCriadoResponse salvar(CriarPersonagemRequest request) throws IllegalArgumentException {
 		// validação
 		Objects.requireNonNull(request, "É necessária uma requsição");
-		if (request.getClasse() == null) throw new IllegalArgumentException("Classe deve ser informada");
-		if (request.getNome() == null) throw new IllegalArgumentException("Nome deve ser informado");
 
 		// mapeamento da requisição
-		Personagem personagem = new Personagem();
-
-		personagem.setId(UUID.randomUUID());
-		personagem.setNome(request.getNome());
-		personagem.setClasse(request.getClasse());
-		personagem.setAtributos(
-			calculadorAtributos.Calcular(personagem.getClasse(), 0));
+		Personagem personagem = new Personagem(request.getNome(), request.getClasse());
 
 		// execução
 		personagem = repository.save(personagem);
@@ -65,7 +54,7 @@ public class PersonagemService {
 
 		Optional<Personagem> p = repository.findById(id);
 
-		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class.getSimpleName());
+		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 
 		// mapeamento
 		Personagem personagem = p.get();
@@ -99,16 +88,13 @@ public class PersonagemService {
 
 	public void adicionarXp(UUID id, AdicionarXpRequest request) throws EntidadeNaoEncontradaException {
 
-		if (request.getXp() < 0)
-			throw new IllegalArgumentException("Não é possível remover xp de uma personagem.");
-
 		Optional<Personagem> p = repository.findById(id);
 
 		if (p.isEmpty()) throw new EntidadeNaoEncontradaException(id, Personagem.class);
 
 		var personagem = p.get();
-		personagem.setAtributos(
-			calculadorAtributos.Calcular(personagem.getClasse(), personagem.getAtributos().getXp() + request.getXp()));
+
+		personagem.adicionarExperiencia(request.getXp());
 
 		personagem = repository.save(personagem);
 	}

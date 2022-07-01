@@ -27,6 +27,6 @@ public class PersonagemResumoResponse {
     int dano;    
     
     public static PersonagemResumoResponse from(Personagem p) {
-        return new PersonagemResumoResponse(p.getId(), p.getNome(), p.getClasse(), p.getDano());
+        return new PersonagemResumoResponse(p.getId(), p.getNome(), p.getClasseEnum(), p.getDano());
     }
 }

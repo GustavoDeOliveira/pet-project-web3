@@ -2,7 +2,11 @@ package br.edu.ifrs.riogrande.tads.apijogo.app.util;
 
 public class ClasseMago extends ClassePersonagem {
 
-    public int getAtaque() {
+    public ClasseMago(long xp) {
+        super(xp);
+	}
+
+	public int getAtaque() {
         int nvl = getNivel();
         return nvl + (int) Math.pow(nvl*2, 2);
     }

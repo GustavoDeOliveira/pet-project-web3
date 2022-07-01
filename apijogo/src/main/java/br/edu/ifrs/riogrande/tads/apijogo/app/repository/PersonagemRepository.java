@@ -18,4 +18,6 @@ public interface PersonagemRepository extends Repository<Personagem, UUID> {
 
 	void removeById(UUID id);
 
+	int count();
+
 }

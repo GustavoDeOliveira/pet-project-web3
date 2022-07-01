@@ -18,4 +18,6 @@ public interface ProdutoRepository extends Repository<Produto, UUID> {
 
 	void removeById(UUID id);
 
+	int count();
+
 }

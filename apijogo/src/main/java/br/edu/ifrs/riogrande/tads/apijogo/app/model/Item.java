@@ -11,17 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "itens")
-@Getter @Setter
-public class Item {
-
-    @Id
-    @GeneratedValue
-    private UUID id;
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Item extends Entidade {
 
     @ManyToOne
     @JoinColumn(name = "personagem_id", nullable = true)

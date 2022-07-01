@@ -2,9 +2,6 @@ package br.edu.ifrs.riogrande.tads.apijogo.controller.dto;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.Personagem;
 import br.edu.ifrs.riogrande.tads.apijogo.app.model.enums.EnumClassePersonagem;
 import io.swagger.annotations.ApiModel;
@@ -47,7 +44,7 @@ public class PersonagemDetalheResponse {
     public static PersonagemDetalheResponse from(Personagem p) {
         return new PersonagemDetalheResponse(p.getId(),
         p.getNome(),
-        p.getClasse(),
+        p.getClasseEnum(),
         p.getDano(),
         p.getAtributos().getXp(),
         p.getAtributos().getNivel(),
